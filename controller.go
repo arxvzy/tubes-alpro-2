@@ -4,23 +4,34 @@ import (
 	"fmt"
 )
 
-func lihatBarang() {
-	var result [NMAX]Barang = getBarang()
-	for i := 0; i < NMAX; i++ {
-		fmt.Printf("%d. %s - Rp. %d | %v\n", i+1, result[i].Nama, result[i].Harga, result[i].Kategori)
+func lihatBarang(data Data) {
+	for i := 0; i < data.Count; i++ {
+		fmt.Printf("%d. %s - Rp. %d | %v\n", i+1, data.Barang[i].Nama, data.Barang[i].Harga, data.Barang[i].Kategori)
 	}
+	pauseScreen()
 }
 
-func tambahBarang() {
+func tambahBarang(data *Data) {
+	if data.Count >= NMAX {
+		fmt.Println("Barang sudah penuh")
+		return
+	}
 	var nama, kategori string
-	var harga, stok int
+	var harga int
 	fmt.Print("Nama barang : ")
 	fmt.Scanln(&nama)
 	fmt.Print("Kategori barang : ")
 	fmt.Scanln(&kategori)
 	fmt.Print("Harga barang : ")
 	fmt.Scanln(&harga)
-	fmt.Print("Stok barang : ")
-	fmt.Scanln(&stok)
-	var barang = Barang{Nama: nama, Harga: harga, Stok: stok, Terjual: 0, Kategori: kategori}
+	var barang = Barang{Nama: nama, Harga: harga, Terjual: 0, Kategori: kategori}
+	data.Barang[data.Count] = barang
+	data.Count++
+	var err = writeBarang(*data)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Barang berhasil ditambahkan")
+	pauseScreen()
 }
