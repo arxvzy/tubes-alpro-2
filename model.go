@@ -7,7 +7,7 @@ import (
 )
 
 func getData() Data {
-	var raw, err = os.ReadFile("barang.bin")
+	var raw, err = os.ReadFile("data.json")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -21,7 +21,7 @@ func writeBarang(data Data) error {
 	if err != nil {
 		fmt.Println(err)
 	}
-	err = os.WriteFile("barang.bin", raw, 0644)
+	err = os.WriteFile("data.json", raw, 0644)
 	if err != nil {
 		fmt.Println(err)
 	}
