@@ -5,28 +5,34 @@ import (
 )
 
 func lihatBarang(data Data) {
-	for i := 0; i < data.Count; i++ {
-		fmt.Printf("%d. %s - Rp. %d | %v\n", i+1, data.Barang[i].Nama, data.Barang[i].Harga, data.Barang[i].Kategori)
+	if data.JumlahBarang == 0 {
+		fmt.Println("Belum ada barang")
+	} else {
+		for i := 0; i < data.JumlahBarang; i++ {
+			fmt.Printf("%d. %s - Rp. %d | %v\n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual, data.Barang[i].Kategori)
+		}
 	}
 	pauseScreen()
 }
 
 func tambahBarang(data *Data) {
-	if data.Count >= NMAX {
+	if data.JumlahBarang >= NBARANG {
 		fmt.Println("Barang sudah penuh")
 		return
 	}
 	var nama, kategori string
-	var harga int
+	var harga, modal int
 	fmt.Print("Nama barang : ")
-	fmt.Scanln(&nama)
+	fmt.Scan(&nama)
 	fmt.Print("Kategori barang : ")
-	fmt.Scanln(&kategori)
-	fmt.Print("Harga barang : ")
-	fmt.Scanln(&harga)
-	var barang = Barang{Nama: nama, Harga: harga, Terjual: 0, Kategori: kategori}
-	data.Barang[data.Count] = barang
-	data.Count++
+	fmt.Scan(&kategori)
+	fmt.Print("Harga modal : ")
+	fmt.Scan(&modal)
+	fmt.Print("Harga jual : ")
+	fmt.Scan(&harga)
+	var barang = Barang{Nama: nama, HargaJual: harga, Terjual: 0, Kategori: kategori, HargaModal: modal}
+	data.Barang[data.JumlahBarang] = barang
+	data.JumlahBarang++
 	var err = writeBarang(*data)
 
 	if err != nil {
