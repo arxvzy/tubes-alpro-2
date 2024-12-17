@@ -4,23 +4,26 @@ import (
 	"fmt"
 )
 
-const NMAX int = 10
+const NBARANG int = 10
+const NTRANSAKSI int = 10
 
 type Barang struct {
-	Nama     string `json:"nama"`
-	Harga    int    `json:"harga"`
-	Terjual  int    `json:"terjual"`
-	Kategori string `json:"kategori"`
+	Nama       string `json:"nama"`
+	HargaJual  int    `json:"hargaJual"`
+	Terjual    int    `json:"terjual"`
+	Kategori   string `json:"kategori"`
+	HargaModal int    `json:"hargaModal"`
 }
 
 type Transaksi struct {
-	Harga int `json:"harga"`
+	totalHarga int `json:"totalHarga"`
 }
 
 type Data struct {
-	Count  int            `json:"count"`
-	Barang [NMAX]Barang   `json:"barang"`
-	Harga  [100]Transaksi `json:"harga"`
+	JumlahBarang    int                   `json:"jumlahBarang"`
+	JumlahTransaksi int                   `json:"jumlahTransaksi"`
+	Barang          [NBARANG]Barang       `json:"barang"`
+	Transaksi       [NTRANSAKSI]Transaksi `json:"transaksi"`
 }
 
 func main() {
@@ -29,12 +32,12 @@ func main() {
 	for inputMenu != "0" {
 		clearScreen()
 		fmt.Println("Aplikasi Penjualan")
-		fmt.Println("1. Lihat Barang") // ada menu cari, urut berdasarkan ..., kembali ke menu utama
+		fmt.Println("1. Lihat Barang")
 		fmt.Println("2. Tambah Barang")
 		fmt.Println("3. Edit Barang")
 		fmt.Println("4. Hapus Barang")
-		fmt.Println("5. Transaksi")         // tambah, edit, hapus transaksi, kembali ke menu utama
-		fmt.Println("6. Laporan Penjualan") // top 5 penjualan, data modal, pendapatan, dll
+		fmt.Println("5. Transaksi")
+		fmt.Println("6. Laporan Penjualan")
 		fmt.Println("0. Keluar")
 		fmt.Print("Pilihan anda : ")
 		fmt.Scanln(&inputMenu)
@@ -48,4 +51,5 @@ func main() {
 	}
 }
 
-// harga modal pada input barang,
+// BUG:
+// 1. MULTI WORD INPUT SCRAMBLE THE INPUT IN tambahBarang()
