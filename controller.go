@@ -33,7 +33,7 @@ func tambahBarang(data *Data) {
 	var barang = Barang{Nama: nama, HargaJual: harga, Terjual: 0, Kategori: kategori, HargaModal: modal}
 	data.Barang[data.JumlahBarang] = barang
 	data.JumlahBarang++
-	var err = writeBarang(*data)
+	var err = writeData(*data)
 
 	if err != nil {
 		fmt.Println(err)

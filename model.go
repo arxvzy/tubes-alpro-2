@@ -16,7 +16,7 @@ func getData() Data {
 	return data
 }
 
-func writeBarang(data Data) error {
+func writeData(data Data) error {
 	var raw, err = json.Marshal(data)
 	if err != nil {
 		fmt.Println(err)
