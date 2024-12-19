@@ -1,0 +1,29 @@
+{
+  "jumlahBarang": 4,
+  "jumlahTransaksi": 0,
+  "barang": [
+    { "id": 0, "nama": "tes", "hargaJual": 24, "terjual": 0, "hargaModal": 12 },
+    {
+      "id": 0,
+      "nama": "ates",
+      "hargaJual": 5000,
+      "terjual": 0,
+      "hargaModal": 2000
+    },
+    { "id": 0, "nama": "ag", "hargaJual": 20, "terjual": 0, "hargaModal": 1 },
+    {
+      "id": 0,
+      "nama": "jsf",
+      "hargaJual": 100,
+      "terjual": 0,
+      "hargaModal": 90
+    },
+    { "id": 0, "nama": "", "hargaJual": 0, "terjual": 0, "hargaModal": 0 },
+    { "id": 0, "nama": "", "hargaJual": 0, "terjual": 0, "hargaModal": 0 },
+    { "id": 0, "nama": "", "hargaJual": 0, "terjual": 0, "hargaModal": 0 },
+    { "id": 0, "nama": "", "hargaJual": 0, "terjual": 0, "hargaModal": 0 },
+    { "id": 0, "nama": "", "hargaJual": 0, "terjual": 0, "hargaModal": 0 },
+    { "id": 0, "nama": "", "hargaJual": 0, "terjual": 0, "hargaModal": 0 }
+  ],
+  "transaksi": [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+}

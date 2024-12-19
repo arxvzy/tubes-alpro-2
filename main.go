@@ -11,7 +11,6 @@ type Barang struct {
 	Nama       string `json:"nama"`
 	HargaJual  int    `json:"hargaJual"`
 	Terjual    int    `json:"terjual"`
-	Kategori   string `json:"kategori"`
 	HargaModal int    `json:"hargaModal"`
 }
 
@@ -47,7 +46,18 @@ func main() {
 			lihatBarang(data)
 		case "2":
 			tambahBarang(&data)
+		case "3":
+			editBarang(&data)
+		case "4":
+			hapusBarang(&data)
+		case "5":
+		case "6":
+		case "0":
+			return
+		default:
+			fmt.Println("Menu Tidak Ada")
 		}
+
 	}
 }
 

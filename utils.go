@@ -7,6 +7,5 @@ func clearScreen() {
 }
 
 func pauseScreen() {
-	var input string
-	fmt.Scanln(&input)
+	fmt.Scanln()
 }
