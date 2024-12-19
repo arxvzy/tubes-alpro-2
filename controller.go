@@ -5,12 +5,26 @@ import (
 )
 
 func lihatBarang(data Data) {
+	var inputMenuBarang string
 	if data.JumlahBarang == 0 {
 		fmt.Println("Belum ada barang")
 	} else {
 		for i := 0; i < data.JumlahBarang; i++ {
 			fmt.Printf("%d. %s - Rp. %d | %v\n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual, data.Barang[i].Kategori)
 		}
+	}
+	fmt.Println("1. Urutkan Berdasarkan Nama Barang")
+	fmt.Println("2. Urutkan Berdasarkan Harga Barang")
+	fmt.Println("0. Keluar")
+	fmt.Print("Pilihan anda : ")
+	fmt.Scan(&inputMenuBarang)
+	switch inputMenuBarang {
+	case "1":
+	case "2":
+	case "0":
+		return
+	default:
+		fmt.Println("Menu Tidak Ada")
 	}
 	pauseScreen()
 }
