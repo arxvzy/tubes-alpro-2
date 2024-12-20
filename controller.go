@@ -10,9 +10,7 @@ func lihatBarang(data Data) {
 		fmt.Println("Belum ada barang")
 	} else {
 		fmt.Println("Data Barang :")
-		for i := 0; i < data.JumlahBarang; i++ {
-			fmt.Printf("%d. %s - Rp. %d\n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual)
-		}
+		printBarang(data)
 	}
 	fmt.Println()
 	fmt.Println("1. Urutkan Berdasarkan Nama Barang")
@@ -120,9 +118,7 @@ func urutBerdasarkanNama(data Data) {
 		data.Barang[i], data.Barang[minIdx] = data.Barang[minIdx], data.Barang[i]
 	}
 	fmt.Println("Barang berhasil diurutkan berdasarkan nama:")
-	for i := 0; i < data.JumlahBarang; i++ {
-		fmt.Printf("%d. %s - Rp. %d \n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual)
-	}
+	printBarang(data)
 }
 
 func urutBerdasarkanHarga(data Data) {
@@ -137,9 +133,7 @@ func urutBerdasarkanHarga(data Data) {
 		data.Barang[j+1] = key
 	}
 	fmt.Println("Barang berhasil diurutkan berdasarkan harga:")
-	for i := 0; i < data.JumlahBarang; i++ {
-		fmt.Printf("%d. %s - Rp. %d \n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual)
-	}
+	printBarang(data)
 }
 
 func hapusBarang(data *Data) {
