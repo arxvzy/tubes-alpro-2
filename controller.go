@@ -25,6 +25,27 @@ func lihatBarang(data Data) {
 	case "2":
 		urutBerdasarkanHarga(data)
 		pauseScreen()
+	case "3":
+		var namaBarang string
+		fmt.Print("Masukkan nama barang yang dicari: ")
+		fmt.Scanln(&namaBarang)
+		// Urutkan hanya sebelum pencarian
+		for i := 0; i < data.JumlahBarang-1; i++ {
+			minIdx := i
+			for j := i + 1; j < data.JumlahBarang; j++ {
+				if data.Barang[j].Nama < data.Barang[minIdx].Nama {
+					minIdx = j
+				}
+			}
+			data.Barang[i], data.Barang[minIdx] = data.Barang[minIdx], data.Barang[i]
+		}
+		index := cariBarangBerdasarkanNama(data, namaBarang)
+		if index != -1 {
+			fmt.Printf("Barang ditemukan: %s - Rp. %d - Modal: Rp. %d\n", data.Barang[index].Nama, data.Barang[index].HargaJual, data.Barang[index].HargaModal)
+		} else {
+			fmt.Println("Barang tidak ditemukan")
+		}
+		pauseScreen()
 	default:
 		fmt.Println("Menu Tidak Ada")
 		pauseScreen()
@@ -107,35 +128,6 @@ func editBarang(data *Data) {
 	}
 }
 
-func urutBerdasarkanNama(data Data) {
-	for i := 0; i < data.JumlahBarang-1; i++ {
-		minIdx := i
-		for j := i + 1; j < data.JumlahBarang; j++ {
-			if data.Barang[j].Nama < data.Barang[minIdx].Nama {
-				minIdx = j
-			}
-		}
-		data.Barang[i], data.Barang[minIdx] = data.Barang[minIdx], data.Barang[i]
-	}
-	fmt.Println("Barang berhasil diurutkan berdasarkan nama:")
-	printBarang(data)
-}
-
-func urutBerdasarkanHarga(data Data) {
-	for i := 1; i < data.JumlahBarang; i++ {
-		key := data.Barang[i]
-		j := i - 1
-		// Geser elemen-elemen yang lebih besar dari key
-		for j >= 0 && data.Barang[j].HargaJual > key.HargaJual {
-			data.Barang[j+1] = data.Barang[j]
-			j--
-		}
-		data.Barang[j+1] = key
-	}
-	fmt.Println("Barang berhasil diurutkan berdasarkan harga:")
-	printBarang(data)
-}
-
 func hapusBarang(data *Data) {
 	if data.JumlahBarang == 0 {
 		fmt.Println("Tidak ada barang yang bisa dihapus")
@@ -175,8 +167,101 @@ func hapusBarang(data *Data) {
 
 }
 
-func printBarang(data Data) {
-	for i := 0; i < data.JumlahBarang; i++ {
-		fmt.Printf("%d. %s - Rp. %d\n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual)
+func menuTransaksi(data *Data) {
+	var pilihan int
+	fmt.Println("Transaksi")
+	fmt.Println("1. Beli Barang")
+	fmt.Println("2. Lihat Transaksi")
+	fmt.Println("3. Hapus Transaksi")
+	fmt.Println("0. Keluar")
+	fmt.Print("Pilihan anda : ")
+	fmt.Scan(&pilihan)
+
+	switch pilihan {
+	case 1:
+		beliBarang(data)
+	case 2:
+		lihatTransaksi(data)
+	case 3:
+		hapusTransaksi(data)
+	default:
+		fmt.Println("Menu Tidak Ada")
+		pauseScreen()
+		pauseScreen()
 	}
+}
+
+func beliBarang(data *Data) {
+	var pilihan, jumlah, index int
+	fmt.Println("Beli Barang")
+	printBarang(*data)
+	fmt.Println("0. Keluar")
+	fmt.Print("Masukkan nomor barang yang ingin dibeli: ")
+	fmt.Scan(&pilihan)
+
+	if pilihan < 1 || pilihan > data.JumlahBarang {
+		fmt.Println("Barang Tidak Ada.")
+		pauseScreen()
+		return
+	}
+	fmt.Print("Masukkan jumlah barang yang ingin dibeli: ")
+	fmt.Scan(&jumlah)
+
+	index = pilihan - 1
+
+	data.Barang[index].Terjual += jumlah
+	var transaksi = Transaksi{TotalHarga: data.Barang[index].HargaJual * jumlah, NamaBarang: data.Barang[index].Nama, JumlahBarang: jumlah}
+	data.Transaksi[data.JumlahTransaksi] = transaksi
+	data.JumlahTransaksi++
+
+	err := writeData(*data)
+	if err != nil {
+		fmt.Println("Terjadi kesalahan saat menyimpan data:", err)
+	}
+
+	fmt.Println("Transaksi berhasil.")
+	fmt.Printf("Nama Barang: %s\n", data.Barang[index].Nama)
+	fmt.Printf("Jumlah Barang: %d\n", jumlah)
+	fmt.Printf("Total Harga: %d\n", data.Barang[index].HargaJual*jumlah)
+	pauseScreen()
+	pauseScreen()
+}
+
+func lihatTransaksi(data *Data) {
+	fmt.Println("Daftar Transaksi:")
+	for i := 0; i < data.JumlahTransaksi; i++ {
+		fmt.Printf("%d. Nama Barang: %s | Jumlah Terjual: %d  | Total Harga: %d\n", i+1, data.Transaksi[i].NamaBarang, data.Transaksi[i].JumlahBarang, data.Transaksi[i].TotalHarga)
+	}
+	pauseScreen()
+	pauseScreen()
+}
+
+func hapusTransaksi(data *Data) {
+	if data.JumlahTransaksi == 0 {
+		fmt.Println("Tidak ada transaksi yang bisa dihapus")
+		return
+	}
+	fmt.Println("Daftar Transaksi:")
+	for i := 0; i < data.JumlahTransaksi; i++ {
+		fmt.Printf("%d. Nama Barang: %s | Total Harga: %d\n", i+1, data.Transaksi[i].NamaBarang, data.Transaksi[i].TotalHarga)
+	}
+	fmt.Print("Masukkan nomor transaksi yang ingin dihapus: ")
+	var index int
+	fmt.Scan(&index)
+	if index < 1 || index > data.JumlahTransaksi {
+		fmt.Println("Transaksi Tidak Ada")
+		return
+	}
+
+	var indexBarang = cariBarangBerdasarkanNama(*data, data.Transaksi[index-1].NamaBarang)
+
+	data.Barang[indexBarang].Terjual -= data.Transaksi[index-1].JumlahBarang
+	for i := index - 1; i < data.JumlahTransaksi-1; i++ {
+		data.Transaksi[i] = data.Transaksi[i+1]
+	}
+	data.Transaksi[data.JumlahTransaksi-1] = Transaksi{}
+	data.JumlahTransaksi--
+	fmt.Println("Transaksi berhasil dihapus")
+	pauseScreen()
+	pauseScreen()
 }
