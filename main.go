@@ -15,7 +15,9 @@ type Barang struct {
 }
 
 type Transaksi struct {
-	totalHarga int `json:"totalHarga"`
+	TotalHarga   int    `json:"totalHarga"`
+	NamaBarang   string `json:"namaBarang"`
+	JumlahBarang int    `json:"jumlahBarang"`
 }
 
 type Data struct {
@@ -51,6 +53,7 @@ func main() {
 		case "4":
 			hapusBarang(&data)
 		case "5":
+			menuTransaksi(&data)
 		case "6":
 		case "0":
 			return
