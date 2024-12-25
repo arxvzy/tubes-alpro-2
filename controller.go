@@ -41,7 +41,7 @@ func lihatBarang(data Data) {
 		}
 		index := cariBarangBerdasarkanNama(data, namaBarang)
 		if index != -1 {
-			fmt.Printf("Barang ditemukan: %s - Rp. %d - Modal: Rp. %d\n", data.Barang[index].Nama, data.Barang[index].HargaJual, data.Barang[index].HargaModal)
+			fmt.Printf("Barang ditemukan: %s - Rp. %d - Modal: Rp. %d - Stok: %d\n", data.Barang[index].Nama, data.Barang[index].HargaJual, data.Barang[index].HargaModal, data.Barang[index].Stok)
 		} else {
 			fmt.Println("Barang tidak ditemukan")
 		}
@@ -58,14 +58,16 @@ func tambahBarang(data *Data) {
 		return
 	}
 	var nama string
-	var harga, modal int
+	var harga, modal, stok int
 	fmt.Print("Nama barang : ")
 	fmt.Scan(&nama)
 	fmt.Print("Harga modal : ")
 	fmt.Scan(&modal)
 	fmt.Print("Harga jual : ")
 	fmt.Scan(&harga)
-	var barang = Barang{Nama: nama, HargaJual: harga, Terjual: 0, HargaModal: modal}
+	fmt.Print("Stok barang: ")
+	fmt.Scan(&stok)
+	var barang = Barang{Nama: nama, HargaJual: harga, Terjual: 0, HargaModal: modal, Stok: stok}
 	data.Barang[data.JumlahBarang] = barang
 	data.JumlahBarang++
 	var err = writeData(*data)
@@ -88,7 +90,7 @@ func editBarang(data *Data) {
 
 	fmt.Println("Daftar Barang:")
 	for i := 0; i < data.JumlahBarang; i++ {
-		fmt.Printf("%d. %s - Rp. %d - Modal: Rp. %d\n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual, data.Barang[i].HargaModal)
+		fmt.Printf("%d. %s - Rp. %d - Modal: Rp. %d - Stok: %d\n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual, data.Barang[i].HargaModal, data.Barang[i].Stok)
 	}
 
 	fmt.Print("Masukkan nomor barang yang ingin diubah: ")
@@ -103,7 +105,7 @@ func editBarang(data *Data) {
 	index := pilihan - 1
 
 	var namaBaru string
-	var hargaModalBaru, hargaJualBaru int
+	var hargaModalBaru, hargaJualBaru, stokBaru int
 
 	fmt.Printf("Nama baru untuk barang (%s): ", data.Barang[index].Nama)
 	fmt.Scan(&namaBaru)
@@ -111,10 +113,13 @@ func editBarang(data *Data) {
 	fmt.Scan(&hargaModalBaru)
 	fmt.Printf("Harga jual baru untuk barang (%d): ", data.Barang[index].HargaJual)
 	fmt.Scan(&hargaJualBaru)
+	fmt.Printf("Stok baru untuk barang (%d): ", data.Barang[index].Stok)
+	fmt.Scan(&stokBaru)
 
 	data.Barang[index].Nama = namaBaru
 	data.Barang[index].HargaModal = hargaModalBaru
 	data.Barang[index].HargaJual = hargaJualBaru
+	data.Barang[index].Stok = stokBaru
 
 	var err = writeData(*data)
 	if err != nil {

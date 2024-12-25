@@ -12,6 +12,7 @@ type Barang struct {
 	HargaJual  int    `json:"hargaJual"`
 	Terjual    int    `json:"terjual"`
 	HargaModal int    `json:"hargaModal"`
+	Stok       int    `json:"stok"`
 }
 
 type Transaksi struct {
