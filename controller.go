@@ -7,6 +7,7 @@ import (
 func lihatBarang(data Data) {
 	clearScreen()
 	fmt.Println("Menu -> Lihat Barang")
+	fmt.Println()
 	var inputMenuBarang string
 	if data.JumlahBarang == 0 {
 		fmt.Println("Barang masih kosong.")
@@ -59,6 +60,7 @@ func lihatBarang(data Data) {
 func tambahBarang(data *Data) {
 	clearScreen()
 	fmt.Println("Menu -> Tambah Barang")
+	fmt.Println()
 	if data.JumlahBarang >= NBARANG {
 		fmt.Println("Penyimpanan barang sudah penuh")
 		return
@@ -89,6 +91,7 @@ func tambahBarang(data *Data) {
 func editBarang(data *Data) {
 	clearScreen()
 	fmt.Println("Menu -> Edit Barang")
+	fmt.Println()
 	var pilihan int
 	if data.JumlahBarang == 0 {
 		fmt.Println("Barang masih kosong.")
@@ -144,6 +147,7 @@ func editBarang(data *Data) {
 func hapusBarang(data *Data) {
 	clearScreen()
 	fmt.Println("Menu -> Hapus Barang")
+	fmt.Println()
 	if data.JumlahBarang == 0 {
 		fmt.Println("Tidak ada barang yang bisa dihapus")
 		return
@@ -185,6 +189,7 @@ func hapusBarang(data *Data) {
 func menuTransaksi(data *Data) {
 	clearScreen()
 	fmt.Println("Menu -> Transaksi")
+	fmt.Println()
 	var pilihan int
 	fmt.Println("Transaksi")
 	fmt.Println("1. Tambah Transaksi")
@@ -211,6 +216,9 @@ func menuTransaksi(data *Data) {
 }
 
 func tambahTransaksi(data *Data) {
+	clearScreen()
+	fmt.Println("Menu -> Menu Transaksi -> Tambah Transaksi")
+	fmt.Println()
 	var pilihan, jumlah, index int
 	fmt.Println("Beli Barang")
 	printBarang(*data)
@@ -249,6 +257,9 @@ func tambahTransaksi(data *Data) {
 }
 
 func lihatTransaksi(data *Data) {
+	clearScreen()
+	fmt.Println("Menu -> Menu Transaksi -> Lihat Transaksi")
+	fmt.Println()
 	fmt.Println("Daftar Transaksi:")
 	printTransaksi(*data)
 	pauseScreen()
@@ -256,6 +267,9 @@ func lihatTransaksi(data *Data) {
 }
 
 func hapusTransaksi(data *Data) {
+	clearScreen()
+	fmt.Println("Menu -> Menu Transaksi -> Hapus Transaksi")
+	fmt.Println()
 	if data.JumlahTransaksi == 0 {
 		fmt.Println("Tidak ada transaksi yang bisa dihapus")
 		return
@@ -284,43 +298,46 @@ func hapusTransaksi(data *Data) {
 }
 
 func laporanPenjualan(data Data) {
-    // Total Modal
-    totalModal := 0
-    for i := 0; i < data.JumlahBarang; i++ {
-        totalModal += data.Barang[i].HargaModal * data.Barang[i].Terjual
-    }
+	clearScreen()
+	fmt.Println("Menu -> Laporan Penjualan")
+	fmt.Println()
+	// Total Modal
+	totalModal := 0
+	for i := 0; i < data.JumlahBarang; i++ {
+		totalModal += data.Barang[i].HargaModal * data.Barang[i].Terjual
+	}
 
-    // Pendapatan Kotor
-    pendapatanKotor := 0
-    for i := 0; i < data.JumlahTransaksi; i++ {
-        pendapatanKotor += data.Transaksi[i].TotalHarga
-    }
+	// Pendapatan Kotor
+	pendapatanKotor := 0
+	for i := 0; i < data.JumlahTransaksi; i++ {
+		pendapatanKotor += data.Transaksi[i].TotalHarga
+	}
 
-    // Pendapatan Bersih
-    pendapatanBersih := pendapatanKotor - totalModal
+	// Pendapatan Bersih
+	pendapatanBersih := pendapatanKotor - totalModal
 
-    // Urutkan Barang Berdasarkan Jumlah Terjual (Manual Sorting - Bubble Sort)
-    for i := 0; i < data.JumlahBarang-1; i++ {
-        for j := 0; j < data.JumlahBarang-i-1; j++ {
-            if data.Barang[j].Terjual < data.Barang[j+1].Terjual {
-                // Tukar posisi barang[j] dengan barang[j+1]
-                temp := data.Barang[j]
-                data.Barang[j] = data.Barang[j+1]
-                data.Barang[j+1] = temp
-            }
-        }
-    }
+	// Urutkan Barang Berdasarkan Jumlah Terjual (Manual Sorting - Bubble Sort)
+	for i := 0; i < data.JumlahBarang-1; i++ {
+		for j := 0; j < data.JumlahBarang-i-1; j++ {
+			if data.Barang[j].Terjual < data.Barang[j+1].Terjual {
+				// Tukar posisi barang[j] dengan barang[j+1]
+				temp := data.Barang[j]
+				data.Barang[j] = data.Barang[j+1]
+				data.Barang[j+1] = temp
+			}
+		}
+	}
 
-    // Cetak Laporan
-    fmt.Println("Laporan Penjualan:")
-    fmt.Printf("Total Modal: Rp %d\n", totalModal)
-    fmt.Printf("Pendapatan Kotor: Rp %d\n", pendapatanKotor)
-    fmt.Printf("Pendapatan Bersih: Rp %d\n", pendapatanBersih)
-    fmt.Println("5 Barang Paling Banyak Terjual:")
-    for i := 0; i < 5 && i < data.JumlahBarang; i++ {
-        barang := data.Barang[i]
-        fmt.Printf("%d. %s - Terjual: %d\n", i+1, barang.Nama, barang.Terjual)
-    }
+	// Cetak Laporan
+	fmt.Println("Laporan Penjualan:")
+	fmt.Printf("Total Modal: Rp %d\n", totalModal)
+	fmt.Printf("Pendapatan Kotor: Rp %d\n", pendapatanKotor)
+	fmt.Printf("Pendapatan Bersih: Rp %d\n\n", pendapatanBersih)
+	fmt.Println("5 Barang Paling Banyak Terjual:")
+	for i := 0; i < 5 && i < data.JumlahBarang; i++ {
+		barang := data.Barang[i]
+		fmt.Printf("%d. %s | Terjual: %d\n", i+1, barang.Nama, barang.Terjual)
+	}
 
-    pauseScreen()
+	pauseScreen()
 }
