@@ -33,7 +33,7 @@ func cariBarangBerdasarkanNama(data Data, nama string) int {
 	return -1 // Barang tidak ditemukan
 }
 
-func urutBerdasarkanHarga(data Data) {
+func urutBerdasarkanHarga(data *Data) {
 	for i := 1; i < data.JumlahBarang; i++ {
 		key := data.Barang[i]
 		j := i - 1
@@ -44,11 +44,9 @@ func urutBerdasarkanHarga(data Data) {
 		}
 		data.Barang[j+1] = key
 	}
-	fmt.Println("Barang berhasil diurutkan berdasarkan harga:")
-	printBarang(data)
 }
 
-func urutBerdasarkanNama(data Data) {
+func urutBerdasarkanNama(data *Data) {
 	for i := 0; i < data.JumlahBarang-1; i++ {
 		minIdx := i
 		for j := i + 1; j < data.JumlahBarang; j++ {
@@ -58,6 +56,4 @@ func urutBerdasarkanNama(data Data) {
 		}
 		data.Barang[i], data.Barang[minIdx] = data.Barang[minIdx], data.Barang[i]
 	}
-	fmt.Println("Barang berhasil diurutkan berdasarkan nama:")
-	printBarang(data)
 }
