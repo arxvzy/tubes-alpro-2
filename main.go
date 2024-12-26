@@ -60,6 +60,7 @@ func main() {
 
 		case "0":
 			fmt.Println("Terima Kasih Telah Menggunakan Aplikasi Jual Beli :)")
+			pauseScreen()
 			return
 		default:
 			fmt.Println("Menu Tidak Ada")

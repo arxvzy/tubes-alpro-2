@@ -11,6 +11,8 @@ func lihatBarang(data Data) {
 	var inputMenuBarang string
 	if data.JumlahBarang == 0 {
 		fmt.Println("Barang masih kosong.")
+		pauseScreen()
+		return
 	} else {
 		fmt.Println("Data Barang :")
 		printBarang(data)
@@ -108,7 +110,7 @@ func editBarang(data *Data) {
 	fmt.Scan(&pilihan)
 
 	if pilihan < 1 || pilihan > data.JumlahBarang {
-		fmt.Println("Barang Tidak Ada.")
+		fmt.Println("Barang Tidak Ditemukan.")
 		pauseScreen()
 		return
 	}
@@ -149,7 +151,8 @@ func hapusBarang(data *Data) {
 	fmt.Println("Menu -> Hapus Barang")
 	fmt.Println()
 	if data.JumlahBarang == 0 {
-		fmt.Println("Tidak ada barang yang bisa dihapus")
+		fmt.Println("Barang masih kosong.")
+		pauseScreen()
 		return
 	}
 	fmt.Println("Daftar Barang:")
@@ -262,6 +265,9 @@ func lihatTransaksi(data *Data) {
 	fmt.Println()
 	if data.JumlahTransaksi == 0 {
 		fmt.Println("Belum ada transaksi")
+		pauseScreen()
+		pauseScreen()
+		return
 	}
 	fmt.Println("Daftar Transaksi:")
 	printTransaksi(*data)
@@ -275,6 +281,8 @@ func hapusTransaksi(data *Data) {
 	fmt.Println()
 	if data.JumlahTransaksi == 0 {
 		fmt.Println("Tidak ada transaksi yang bisa dihapus")
+		pauseScreen()
+		pauseScreen()
 		return
 	}
 	fmt.Println("Daftar Transaksi:")
