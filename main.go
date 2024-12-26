@@ -33,7 +33,7 @@ func main() {
 	var inputMenu string
 	for inputMenu != "0" {
 		clearScreen()
-		fmt.Println("Aplikasi Penjualan")
+		fmt.Println("Menu Aplikasi Jual Beli")
 		fmt.Println("1. Lihat Barang")
 		fmt.Println("2. Tambah Barang")
 		fmt.Println("3. Edit Barang")
@@ -57,13 +57,10 @@ func main() {
 			menuTransaksi(&data)
 		case "6":
 		case "0":
+			fmt.Println("Terima Kasih Telah Menggunakan Aplikasi Jual Beli :)")
 			return
 		default:
 			fmt.Println("Menu Tidak Ada")
 		}
-
 	}
 }
-
-// BUG:
-// 1. MULTI WORD INPUT SCRAMBLE THE INPUT IN tambahBarang()

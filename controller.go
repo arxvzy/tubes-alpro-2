@@ -5,9 +5,11 @@ import (
 )
 
 func lihatBarang(data Data) {
+	clearScreen()
+	fmt.Println("Menu -> Lihat Barang")
 	var inputMenuBarang string
 	if data.JumlahBarang == 0 {
-		fmt.Println("Belum ada barang")
+		fmt.Println("Barang masih kosong.")
 	} else {
 		fmt.Println("Data Barang :")
 		printBarang(data)
@@ -15,37 +17,39 @@ func lihatBarang(data Data) {
 	fmt.Println()
 	fmt.Println("1. Urutkan Berdasarkan Nama Barang")
 	fmt.Println("2. Urutkan Berdasarkan Harga Barang")
+	fmt.Println("3. Cari Berdasarkan Nama")
 	fmt.Println("0. Keluar")
 	fmt.Print("Pilihan anda : ")
 	fmt.Scanln(&inputMenuBarang)
 	switch inputMenuBarang {
 	case "1":
-		urutBerdasarkanNama(data)
+		urutBerdasarkanNama(&data)
+		fmt.Println("Barang berhasil diurutkan berdasarkan nama:")
+		printBarang(data)
 		pauseScreen()
 	case "2":
-		urutBerdasarkanHarga(data)
+		urutBerdasarkanHarga(&data)
+		fmt.Println("Barang berhasil diurutkan berdasarkan harga:")
+		printBarang(data)
 		pauseScreen()
 	case "3":
 		var namaBarang string
 		fmt.Print("Masukkan nama barang yang dicari: ")
 		fmt.Scanln(&namaBarang)
-		// Urutkan hanya sebelum pencarian
-		for i := 0; i < data.JumlahBarang-1; i++ {
-			minIdx := i
-			for j := i + 1; j < data.JumlahBarang; j++ {
-				if data.Barang[j].Nama < data.Barang[minIdx].Nama {
-					minIdx = j
-				}
-			}
-			data.Barang[i], data.Barang[minIdx] = data.Barang[minIdx], data.Barang[i]
-		}
+		urutBerdasarkanNama(&data)
 		index := cariBarangBerdasarkanNama(data, namaBarang)
 		if index != -1 {
-			fmt.Printf("Barang ditemukan: %s - Rp. %d - Modal: Rp. %d - Stok: %d\n", data.Barang[index].Nama, data.Barang[index].HargaJual, data.Barang[index].HargaModal, data.Barang[index].Stok)
+			fmt.Printf("Barang ditemukan:\n\n")
+			fmt.Printf("Nama Barang: %s\n", data.Barang[index].Nama)
+			fmt.Printf("Harga Jual: %d\n", data.Barang[index].HargaJual)
+			fmt.Printf("Stok: %d\n", data.Barang[index].Stok)
+			fmt.Printf("Harga Modal: %d\n", data.Barang[index].HargaModal)
 		} else {
 			fmt.Println("Barang tidak ditemukan")
 		}
 		pauseScreen()
+	case "0":
+		return
 	default:
 		fmt.Println("Menu Tidak Ada")
 		pauseScreen()
@@ -53,8 +57,10 @@ func lihatBarang(data Data) {
 }
 
 func tambahBarang(data *Data) {
+	clearScreen()
+	fmt.Println("Menu -> Tambah Barang")
 	if data.JumlahBarang >= NBARANG {
-		fmt.Println("Barang sudah penuh")
+		fmt.Println("Penyimpanan barang sudah penuh")
 		return
 	}
 	var nama string
@@ -81,9 +87,11 @@ func tambahBarang(data *Data) {
 }
 
 func editBarang(data *Data) {
+	clearScreen()
+	fmt.Println("Menu -> Edit Barang")
 	var pilihan int
 	if data.JumlahBarang == 0 {
-		fmt.Println("Belum ada barang untuk diubah.")
+		fmt.Println("Barang masih kosong.")
 		pauseScreen()
 		return
 	}
@@ -134,6 +142,8 @@ func editBarang(data *Data) {
 }
 
 func hapusBarang(data *Data) {
+	clearScreen()
+	fmt.Println("Menu -> Hapus Barang")
 	if data.JumlahBarang == 0 {
 		fmt.Println("Tidak ada barang yang bisa dihapus")
 		return
@@ -173,6 +183,8 @@ func hapusBarang(data *Data) {
 }
 
 func menuTransaksi(data *Data) {
+	clearScreen()
+	fmt.Println("Menu -> Transaksi")
 	var pilihan int
 	fmt.Println("Transaksi")
 	fmt.Println("1. Beli Barang")
@@ -189,6 +201,8 @@ func menuTransaksi(data *Data) {
 		lihatTransaksi(data)
 	case 3:
 		hapusTransaksi(data)
+	case 0:
+		return
 	default:
 		fmt.Println("Menu Tidak Ada")
 		pauseScreen()
