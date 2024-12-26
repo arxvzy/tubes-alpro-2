@@ -260,6 +260,9 @@ func lihatTransaksi(data *Data) {
 	clearScreen()
 	fmt.Println("Menu -> Menu Transaksi -> Lihat Transaksi")
 	fmt.Println()
+	if data.JumlahTransaksi == 0 {
+		fmt.Println("Belum ada transaksi")
+	}
 	fmt.Println("Daftar Transaksi:")
 	printTransaksi(*data)
 	pauseScreen()
