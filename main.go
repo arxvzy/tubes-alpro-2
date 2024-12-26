@@ -56,6 +56,8 @@ func main() {
 		case "5":
 			menuTransaksi(&data)
 		case "6":
+			laporanPenjualan(data)
+
 		case "0":
 			fmt.Println("Terima Kasih Telah Menggunakan Aplikasi Jual Beli :)")
 			return

@@ -284,3 +284,45 @@ func hapusTransaksi(data *Data) {
 	pauseScreen()
 	pauseScreen()
 }
+
+func laporanPenjualan(data Data) {
+    // Total Modal
+    totalModal := 0
+    for i := 0; i < data.JumlahBarang; i++ {
+        totalModal += data.Barang[i].HargaModal * data.Barang[i].Terjual
+    }
+
+    // Pendapatan Kotor
+    pendapatanKotor := 0
+    for i := 0; i < data.JumlahTransaksi; i++ {
+        pendapatanKotor += data.Transaksi[i].TotalHarga
+    }
+
+    // Pendapatan Bersih
+    pendapatanBersih := pendapatanKotor - totalModal
+
+    // Urutkan Barang Berdasarkan Jumlah Terjual (Manual Sorting - Bubble Sort)
+    for i := 0; i < data.JumlahBarang-1; i++ {
+        for j := 0; j < data.JumlahBarang-i-1; j++ {
+            if data.Barang[j].Terjual < data.Barang[j+1].Terjual {
+                // Tukar posisi barang[j] dengan barang[j+1]
+                temp := data.Barang[j]
+                data.Barang[j] = data.Barang[j+1]
+                data.Barang[j+1] = temp
+            }
+        }
+    }
+
+    // Cetak Laporan
+    fmt.Println("Laporan Penjualan:")
+    fmt.Printf("Total Modal: Rp %d\n", totalModal)
+    fmt.Printf("Pendapatan Kotor: Rp %d\n", pendapatanKotor)
+    fmt.Printf("Pendapatan Bersih: Rp %d\n", pendapatanBersih)
+    fmt.Println("5 Barang Paling Banyak Terjual:")
+    for i := 0; i < 5 && i < data.JumlahBarang; i++ {
+        barang := data.Barang[i]
+        fmt.Printf("%d. %s - Terjual: %d\n", i+1, barang.Nama, barang.Terjual)
+    }
+
+    pauseScreen()
+}
