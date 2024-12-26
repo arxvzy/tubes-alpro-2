@@ -98,7 +98,7 @@ func editBarang(data *Data) {
 
 	fmt.Println("Daftar Barang:")
 	for i := 0; i < data.JumlahBarang; i++ {
-		fmt.Printf("%d. %s - Rp. %d - Modal: Rp. %d - Stok: %d\n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual, data.Barang[i].HargaModal, data.Barang[i].Stok)
+		fmt.Printf("%d. %s | Harga Jual: Rp. %d | Harga Modal: Rp. %d | Stok: %d\n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual, data.Barang[i].HargaModal, data.Barang[i].Stok)
 	}
 
 	fmt.Print("Masukkan nomor barang yang ingin diubah: ")
@@ -148,7 +148,7 @@ func hapusBarang(data *Data) {
 		fmt.Println("Tidak ada barang yang bisa dihapus")
 		return
 	}
-
+	fmt.Println("Daftar Barang:")
 	printBarang(*data)
 
 	// Meminta input nomor barang yang ingin dihapus
@@ -187,7 +187,7 @@ func menuTransaksi(data *Data) {
 	fmt.Println("Menu -> Transaksi")
 	var pilihan int
 	fmt.Println("Transaksi")
-	fmt.Println("1. Beli Barang")
+	fmt.Println("1. Tambah Transaksi")
 	fmt.Println("2. Lihat Transaksi")
 	fmt.Println("3. Hapus Transaksi")
 	fmt.Println("0. Keluar")
@@ -196,7 +196,7 @@ func menuTransaksi(data *Data) {
 
 	switch pilihan {
 	case 1:
-		beliBarang(data)
+		tambahTransaksi(data)
 	case 2:
 		lihatTransaksi(data)
 	case 3:
@@ -210,7 +210,7 @@ func menuTransaksi(data *Data) {
 	}
 }
 
-func beliBarang(data *Data) {
+func tambahTransaksi(data *Data) {
 	var pilihan, jumlah, index int
 	fmt.Println("Beli Barang")
 	printBarang(*data)
@@ -229,7 +229,9 @@ func beliBarang(data *Data) {
 	index = pilihan - 1
 
 	data.Barang[index].Terjual += jumlah
+
 	var transaksi = Transaksi{TotalHarga: data.Barang[index].HargaJual * jumlah, NamaBarang: data.Barang[index].Nama, JumlahBarang: jumlah}
+
 	data.Transaksi[data.JumlahTransaksi] = transaksi
 	data.JumlahTransaksi++
 
@@ -239,18 +241,16 @@ func beliBarang(data *Data) {
 	}
 
 	fmt.Println("Transaksi berhasil.")
-	fmt.Printf("Nama Barang: %s\n", data.Barang[index].Nama)
-	fmt.Printf("Jumlah Barang: %d\n", jumlah)
-	fmt.Printf("Total Harga: %d\n", data.Barang[index].HargaJual*jumlah)
+	fmt.Printf("Nama Barang: %s\n", transaksi.NamaBarang)
+	fmt.Printf("Jumlah Barang: %d\n", transaksi.JumlahBarang)
+	fmt.Printf("Total Harga: %d\n", transaksi.TotalHarga)
 	pauseScreen()
 	pauseScreen()
 }
 
 func lihatTransaksi(data *Data) {
 	fmt.Println("Daftar Transaksi:")
-	for i := 0; i < data.JumlahTransaksi; i++ {
-		fmt.Printf("%d. Nama Barang: %s | Jumlah Terjual: %d  | Total Harga: %d\n", i+1, data.Transaksi[i].NamaBarang, data.Transaksi[i].JumlahBarang, data.Transaksi[i].TotalHarga)
-	}
+	printTransaksi(*data)
 	pauseScreen()
 	pauseScreen()
 }
@@ -261,9 +261,7 @@ func hapusTransaksi(data *Data) {
 		return
 	}
 	fmt.Println("Daftar Transaksi:")
-	for i := 0; i < data.JumlahTransaksi; i++ {
-		fmt.Printf("%d. Nama Barang: %s | Total Harga: %d\n", i+1, data.Transaksi[i].NamaBarang, data.Transaksi[i].TotalHarga)
-	}
+	printTransaksi(*data)
 	fmt.Print("Masukkan nomor transaksi yang ingin dihapus: ")
 	var index int
 	fmt.Scan(&index)

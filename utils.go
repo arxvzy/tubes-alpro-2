@@ -12,7 +12,13 @@ func pauseScreen() {
 
 func printBarang(data Data) {
 	for i := 0; i < data.JumlahBarang; i++ {
-		fmt.Printf("%d. %s - Rp. %d - Stok: %d\n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual, data.Barang[i].Stok)
+		fmt.Printf("%d. %s | Rp. %d | Stok: %d\n", i+1, data.Barang[i].Nama, data.Barang[i].HargaJual, data.Barang[i].Stok)
+	}
+}
+
+func printTransaksi(data Data) {
+	for i := 0; i < data.JumlahTransaksi; i++ {
+		fmt.Printf("%d. Nama Barang: %s | Jumlah Terjual: %d  | Total Harga: %d\n", i+1, data.Transaksi[i].NamaBarang, data.Transaksi[i].JumlahBarang, data.Transaksi[i].TotalHarga)
 	}
 }
 
