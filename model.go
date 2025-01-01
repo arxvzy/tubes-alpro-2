@@ -16,7 +16,7 @@ func getData() Data {
 	return data
 }
 
-func writeData(data Data) error {
+func writeData(data Data){
 	var raw, err = json.Marshal(data)
 	if err != nil {
 		fmt.Println(err)
@@ -25,5 +25,4 @@ func writeData(data Data) error {
 	if err != nil {
 		fmt.Println(err)
 	}
-	return err
 }

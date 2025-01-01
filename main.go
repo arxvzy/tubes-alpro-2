@@ -4,7 +4,8 @@ import (
 	"fmt"
 )
 
-const NBARANG int = 10
+// deklarasi variabel global 
+const NBARANG int = 10 
 const NTRANSAKSI int = 10
 
 type Barang struct {
@@ -29,17 +30,17 @@ type Data struct {
 }
 
 func main() {
-	var data Data = getData()
+	var data Data = getData() // mengambil data dari json
 	var inputMenu string
 	for inputMenu != "0" {
 		clearScreen()
 		fmt.Println("Menu Aplikasi Jual Beli")
-		fmt.Println("1. Lihat Barang")
-		fmt.Println("2. Tambah Barang")
-		fmt.Println("3. Edit Barang")
-		fmt.Println("4. Hapus Barang")
-		fmt.Println("5. Transaksi")
-		fmt.Println("6. Laporan Penjualan")
+		fmt.Println("1. Lihat Barang") // Bintang Yudhis
+		fmt.Println("2. Tambah Barang") // Bintang Yudhis
+		fmt.Println("3. Edit Barang") // Arya Bimarya
+		fmt.Println("4. Hapus Barang") // Muhammad Aulia
+		fmt.Println("5. Transaksi") // Arya Bima
+		fmt.Println("6. Laporan Penjualan") // Muhammad Aulia
 		fmt.Println("0. Keluar")
 		fmt.Print("Pilihan anda : ")
 		fmt.Scanln(&inputMenu)

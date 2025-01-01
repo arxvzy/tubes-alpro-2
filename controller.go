@@ -77,14 +77,11 @@ func tambahBarang(data *Data) {
 	fmt.Scan(&harga)
 	fmt.Print("Stok barang: ")
 	fmt.Scan(&stok)
-	var barang = Barang{Nama: nama, HargaJual: harga, Terjual: 0, HargaModal: modal, Stok: stok}
-	data.Barang[data.JumlahBarang] = barang
-	data.JumlahBarang++
-	var err = writeData(*data)
+	var barang = Barang{Nama: nama, HargaJual: harga, Terjual: 0, HargaModal: modal, Stok: stok} // ngisi struct
+	data.Barang[data.JumlahBarang] = barang                                                      // data index terbaru  di isi barang
+	data.JumlahBarang++                                                                          // index buat data barang selanjutnya
+	writeData(*data)                                                                             // buat nyimpen data ke json
 
-	if err != nil {
-		fmt.Println(err)
-	}
 	fmt.Println("Barang berhasil ditambahkan")
 	pauseScreen()
 	pauseScreen()
@@ -134,16 +131,10 @@ func editBarang(data *Data) {
 	data.Barang[index].HargaJual = hargaJualBaru
 	data.Barang[index].Stok = stokBaru
 
-	var err = writeData(*data)
-	if err != nil {
-		fmt.Println("Terjadi kesalahan saat menyimpan data:", err)
-		pauseScreen()
-		pauseScreen()
-	} else {
-		fmt.Println("Barang berhasil diperbarui.")
-		pauseScreen()
-		pauseScreen()
-	}
+	writeData(*data)
+	fmt.Println("Barang berhasil diperbarui.")
+	pauseScreen()
+	pauseScreen()
 }
 
 func hapusBarang(data *Data) {
@@ -177,11 +168,7 @@ func hapusBarang(data *Data) {
 	data.JumlahBarang--
 
 	// Simpan perubahan ke file
-	err := writeData(*data)
-	if err != nil {
-		fmt.Println("Gagal menyimpan data:", err)
-		return
-	}
+	writeData(*data)
 
 	fmt.Println("Barang berhasil dihapus")
 	pauseScreen()
@@ -245,11 +232,9 @@ func tambahTransaksi(data *Data) {
 
 	data.Transaksi[data.JumlahTransaksi] = transaksi
 	data.JumlahTransaksi++
+	data.Barang[index].Stok -= jumlah
 
-	err := writeData(*data)
-	if err != nil {
-		fmt.Println("Terjadi kesalahan saat menyimpan data:", err)
-	}
+	writeData(*data)
 
 	fmt.Println("Transaksi berhasil.")
 	fmt.Printf("Nama Barang: %s\n", transaksi.NamaBarang)
