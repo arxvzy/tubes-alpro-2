@@ -273,21 +273,23 @@ func hapusTransaksi(data *Data) {
 	fmt.Println("Daftar Transaksi:")
 	printTransaksi(*data)
 	fmt.Print("Masukkan nomor transaksi yang ingin dihapus: ")
-	var index int
-	fmt.Scan(&index)
-	if index < 1 || index > data.JumlahTransaksi {
+	var pilihan int
+	fmt.Scan(&pilihan)
+	if pilihan < 1 || pilihan > data.JumlahTransaksi {
 		fmt.Println("Transaksi Tidak Ada")
 		return
 	}
 
-	var indexBarang = cariBarangBerdasarkanNama(*data, data.Transaksi[index-1].NamaBarang)
+	var indexBarang = cariBarangBerdasarkanNama(*data, data.Transaksi[pilihan-1].NamaBarang)
 
-	data.Barang[indexBarang].Terjual -= data.Transaksi[index-1].JumlahBarang
-	for i := index - 1; i < data.JumlahTransaksi-1; i++ {
+	data.Barang[indexBarang].Terjual -= data.Transaksi[pilihan-1].JumlahBarang
+	for i := pilihan - 1; i < data.JumlahTransaksi-1; i++ {
 		data.Transaksi[i] = data.Transaksi[i+1]
 	}
 	data.Transaksi[data.JumlahTransaksi-1] = Transaksi{}
 	data.JumlahTransaksi--
+
+	writeData(*data)
 	fmt.Println("Transaksi berhasil dihapus")
 	pauseScreen()
 	pauseScreen()
