@@ -224,6 +224,12 @@ func tambahTransaksi(data *Data) {
 	fmt.Print("Masukkan jumlah barang yang ingin dibeli: ")
 	fmt.Scan(&jumlah)
 
+	if jumlah > data.Barang[pilihan-1].Stok {
+		fmt.Println("Stok tidak mencukupi.")
+		pauseScreen()
+		return
+	}
+
 	index = pilihan - 1
 
 	data.Barang[index].Terjual += jumlah
